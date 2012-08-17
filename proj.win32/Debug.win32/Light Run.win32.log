@@ -1,0 +1,22 @@
+﻿Build started 2012/08/17 09:39:28 PM.
+     1>Project "C:\Users\Aidan\Downloads\cocos2d-2.0-rc2-x-2.0.1\Light Run\proj.win32\Light Run.win32.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug.win32\Light Run.win32.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ResourceCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+       Manifest:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Debug.win32\Light Run.win32.unsuccessfulbuild".
+         Touching "Debug.win32\Light Run.win32.lastbuildstate".
+     1>Done Building Project "C:\Users\Aidan\Downloads\cocos2d-2.0-rc2-x-2.0.1\Light Run\proj.win32\Light Run.win32.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.91
