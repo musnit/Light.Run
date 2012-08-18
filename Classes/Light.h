@@ -4,7 +4,7 @@
 #include "GameObject.h"
 using namespace cocos2d;
 
-class Light : public GameObject
+class Light : public CCSprite
 {
 public:
 	Light();

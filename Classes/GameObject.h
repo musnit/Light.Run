@@ -16,10 +16,18 @@ public:
 
 	GameObject();
 	static GameObject* retainedObjectWithSpriteFrameName(const char *pszSpriteFrameName);
-	void updateTrail();
-private:
-		int colourer;
+	static GameObject* retainedObjectWithSpriteFrame(CCSpriteFrame *pSpriteFrame );
+	static GameObject* retainedObjectWithSprite(CCSprite *pSprite );
+	void updateTrail(float dt);
+	bool canBeOffScreen();
+	bool isOffScreen();
+		virtual void removeFromParentAndCleanup();
 
+private:
+	int colourmode;
+		_ccColor3B colour;
+		float newtrail;
+		_ccColor3B nextColour();
 protected:
 	    b2Body *body;
 		CCSprite* sprite;

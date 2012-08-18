@@ -8,6 +8,6 @@ Player::Player(void)
 
 
 void Player::jump(){
-    b2Vec2 impulse = b2Vec2(0.0f, 1.0f);
+    b2Vec2 impulse = b2Vec2(0.0f, 2.5f);
     this->body->ApplyLinearImpulse(impulse, this->body->GetWorldCenter());		    
 }

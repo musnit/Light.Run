@@ -4,21 +4,66 @@ using namespace cocos2d;
 
 GameObject::GameObject()
 {
-		this->colourer=1;
+		this->newtrail=0.05f;
+		_ccColor3B c =  {255,0,0};
+		 this->colour =c;
+		 this->colourmode=0;
 
     CCNode::CCNode();
 }
+	bool GameObject::canBeOffScreen(){
+	return false;
+	}
+	bool GameObject::isOffScreen(){
+					CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+					if(this->sprite->getPositionX()<-50||this->sprite->getPositionX()>winSize.width+50||this->sprite->getPositionY()<-50||this->sprite->getPositionY()>winSize.height+50){
+					return true;
+					}
+	return false;
+	}
 
 GameObject* GameObject::retainedObjectWithSpriteFrameName(const char *pszSpriteFrameName )
 {
 	GameObject *obj = new GameObject();
     if (obj->sprite=CCSprite::createWithSpriteFrameName(pszSpriteFrameName))
     {
-		obj->colourer=1;
-        return obj;
+		obj->newtrail=0.05f;
+		_ccColor3B c =  {255,0,0};
+		 obj->colour =c;
+		 		 obj->colourmode=0;
+
+		 return obj;
     }
     CC_SAFE_DELETE(obj);
 	return NULL;
+}
+
+GameObject* GameObject::retainedObjectWithSpriteFrame(CCSpriteFrame *pSpriteFrame )
+{
+	GameObject *obj = new GameObject();
+    if (obj->sprite=CCSprite::create(pSpriteFrame))
+    {
+		obj->newtrail=0.05f;
+		_ccColor3B c =  {255,0,0};
+		 obj->colour =c;
+		 		 obj->colourmode=0;
+
+		 return obj;
+    }
+    CC_SAFE_DELETE(obj);
+	return NULL;
+}
+
+GameObject* GameObject::retainedObjectWithSprite(CCSprite *pSprite )
+{
+	GameObject *obj = new GameObject();
+    obj->sprite=pSprite;
+    obj->newtrail=0.05f;
+	_ccColor3B c =  {255,0,0};
+	 obj->colour =c;
+	 obj->colourmode=0;
+	 return obj;
+    
 }
 
 	CCSprite* GameObject::getSprite(){
@@ -27,6 +72,45 @@ GameObject* GameObject::retainedObjectWithSpriteFrameName(const char *pszSpriteF
 
 	b2Body* GameObject::getBody(){
 		return this->body;	
+	}
+	_ccColor3B GameObject::nextColour(){
+		if(colourmode==0){
+			colour.b+=51;
+			if(colour.b==255){
+			colourmode=1;
+			}
+		}
+		if(colourmode==1){
+			colour.r-=51;
+			if(colour.r==0){
+			colourmode=2;
+			}
+		}
+		if(colourmode==2){
+			colour.g+=51;
+			if(colour.g==255){
+			colourmode=3;
+			}
+		}
+		if(colourmode==3){
+			colour.b-=51;
+			if(colour.b==0){
+			colourmode=4;
+			}
+		}
+		if(colourmode==4){
+			colour.r+=51;
+			if(colour.r==255){
+			colourmode=5;
+			}
+		}	
+		if(colourmode==5){
+			colour.g-=51;
+			if(colour.g==0){
+			colourmode=0;
+			}
+		}	
+		return this->colour;
 	}
 
 	void GameObject::createBox2dObject(b2World* world) {
@@ -47,33 +131,37 @@ GameObject* GameObject::retainedObjectWithSpriteFrameName(const char *pszSpriteF
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 1.0f;
+	fixtureDef.friction = 0.0f;
 	fixtureDef.restitution =  0.0f;
 	this->body->CreateFixture(&fixtureDef);
 }
 
-	void GameObject::updateTrail(){
-		this->sprite->removeAllChildrenWithCleanup(1);
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		CCSprite* head = CCSprite::create( this->sprite->displayFrame()); 
-		head->setPosition(ccp(this->sprite->getContentSize().width/2, this->sprite->getContentSize().height/2));
-		this->sprite->addChild(head, 9999);
-for(int i=1;i<40;i++){//needs to loop to end of screen or based on motion
-		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-		CCSprite* trail = CCSprite::create( this->sprite->displayFrame()); 
-		trail->setPosition(ccp(this->sprite->getContentSize().width/2-i, this->sprite->getContentSize().height/2));
-		_ccColor3B color = {20*(colourer+i),10*(colourer+i),50*(colourer+i)};
-		trail->setColor(color);
-		this->sprite->addChild(trail, 20-i);
-		if (colourer==8){
-			colourer=1;
-			}
-		else{
-				colourer++;
+	void GameObject::updateTrail(float dt){
+		this->newtrail-=dt;
+		if(this->newtrail<=0){
+			this->newtrail=0.05f;
+		GameObject* trail = GameObject::retainedObjectWithSpriteFrame(this->sprite->displayFrame()); 
+		trail->sprite->setPosition(ccp(this->sprite->getPositionX(), this->sprite->getPositionY()));
+		trail->createBox2dObject(this->body->GetWorld());
+		trail->body->ApplyLinearImpulse(b2Vec2(-0.5f, 0.0f) ,this->body->GetWorldCenter());
+		this->sprite->getParent()->addChild(trail->getSprite());
+		trail->body->SetType(b2_kinematicBody);
+		//get the existing filter
+  b2Filter filter = trail->body->GetFixtureList()->GetFilterData();
+  //make no collisions
+  filter.maskBits = 0;
+  //and set it back
+  trail->body->GetFixtureList()->SetFilterData(filter);
+
+		trail->sprite->setColor(nextColour());
 		}
-	}
 
 	
 
 }
  
+	void GameObject::removeFromParentAndCleanup(){
+  // this->body->GetWorld()->DestroyBody( this->body );
+	//	this->sprite->removeFromParentAndCleanup(true);
+	//CCNode::removeFromParentAndCleanup(true);
+}

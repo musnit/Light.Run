@@ -54,7 +54,7 @@ world = new b2World(gravity);
  world->SetContinuousPhysics(true);
  //DEBUG
 b2DebugDraw *debugDraw = new b2DebugDraw(PTM_RATIO);
-world->SetDebugDraw(debugDraw);
+//world->SetDebugDraw(debugDraw);
 uint32 flags = 0;
 flags += b2Draw::e_shapeBit;
 flags += b2Draw::e_jointBit;
@@ -84,11 +84,19 @@ debugDraw->SetFlags(flags);
 	_boss->getSprite()->setPosition(ccp(winSize.width * 0.9, winSize.height * 0.5));
 	_batchNode->addChild(_boss->getSprite(), 1);
 	_boss->createBox2dObject(world);
+		_boss->getBody()->SetType(b2_kinematicBody);
+
 	//Register for touches and gameloop
 	this->setTouchEnabled(true) ;
 	this->scheduleUpdate();
 	move=true;
 	spawnrate=3;
+	//get the existing filter
+  b2Filter filter = _boss->getBody()->GetFixtureList()->GetFilterData();
+  //make no collisions
+  filter.maskBits = 0;
+  //and set it back
+  _boss->getBody()->GetFixtureList()->SetFilterData(filter);
 
 	//floor
 	_floor = GameObject::retainedObjectWithSpriteFrameName("floor.png");
@@ -101,8 +109,7 @@ debugDraw->SetFlags(flags);
 }
 void Game::update(float dt) {
 
-	_player->updateTrail();
-	_boss->getBody()->ApplyForce(-1 * _boss->getBody()->GetMass() * world->GetGravity(), _boss->getBody()->GetWorldCenter());
+	_player->updateTrail(dt);
 
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
@@ -120,11 +127,17 @@ void Game::update(float dt) {
 	//Iterate over the bodies in the physics world
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
 		if (b->GetUserData() != NULL) {
+						GameObject *myActor = (GameObject*)b->GetUserData();
+
+						if(myActor->isOffScreen()&&!myActor->canBeOffScreen()){
+							myActor->removeFromParentAndCleanup();
+			}
+			else {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			GameObject *myActor = (GameObject*)b->GetUserData();
 			myActor->getSprite()->setPosition(CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO));
 			myActor->getSprite()->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
-		}	
+			}
+			}	
 	}	
 	if(move==false){
 		spawnrate+=dt;
@@ -137,14 +150,18 @@ void Game::update(float dt) {
 	else{
 		spawnrate-=dt;
 		if((spawnrate<=0)&&(_boss->getSprite()->getPositionY()<winSize.height*0.1+0.5*winSize.height)){//err:doesn't account for change in players height on new platform
-			Light* test = Light::retainedLight();
-			test->setPosition(ccp(_boss->getSprite()->getPositionX()+50, _boss->getSprite()->getPositionY()));
-			this->addChild(test);	
-			test->runAction(CCSequence::create(CCMoveBy::create( 4 ,ccp(-winSize.width*1.5, 0)),CCCallFunc::create(test,callfunc_selector(Light::removeFromParentAndCleanup)), NULL));
+			GameObject* test = GameObject::retainedObjectWithSprite(Light::retainedLight());
+			test->getSprite()->setPosition(ccp(_boss->getSprite()->getPositionX()+50, _boss->getSprite()->getPositionY()));
+			this->addChild(test->getSprite());	
+			test->createBox2dObject(world);
+			test->getBody()->SetLinearVelocity(b2Vec2(-5.0f, 0.0f));
+		test->getBody()->SetType(b2_kinematicBody);
+
+			//test->getSprite()->runAction(CCMoveBy::create( 4 ,ccp(-winSize.width*1.5, 0)));
 			spawnrate=0;
 			CCDirector::sharedDirector()->getActionManager()->pauseTarget(_boss->getSprite());
 			move=false;
-			CCLog("%i", this->getChildrenCount());//err:gameobjects arent autoreleased(coz it doesnt work dunno wtf- cocos releases them too early maybe?) so makesure to release when done - check/confirm memusage with this print
+			CCLog("%i", _batchNode->getChildrenCount());//err:gameobjects arent autoreleased(coz it doesnt work dunno wtf- cocos releases them too early maybe?) so makesure to release when done - check/confirm memusage with this print
 		}
 	}
 }

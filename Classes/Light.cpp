@@ -4,13 +4,16 @@ using namespace cocos2d;
 
 Light::Light()
 {
-	CCNode::CCNode();
+	CCSprite::CCSprite();
 
 }
 	Light* Light::retainedLight(){
 	Light* l = new Light();
+	l->setContentSize(CCSize(100,5));
+
 	return l;
 }
+
 
 void Light::draw(){
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
@@ -23,5 +26,5 @@ void Light::draw(){
 }
 
 void Light::removeFromParentAndCleanup(){
-	CCNode::removeFromParentAndCleanup(true);
+	CCSprite::removeFromParentAndCleanup(true);
 }
