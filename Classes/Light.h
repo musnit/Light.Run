@@ -8,6 +8,7 @@ class Light : public CCSprite
 {
 public:
 	Light();
+	float width;
 	static Light* retainedLight();
 	virtual void draw();
 	virtual void removeFromParentAndCleanup();

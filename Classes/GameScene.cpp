@@ -64,6 +64,8 @@ flags += b2Draw::e_pairBit;
 debugDraw->SetFlags(flags);
 
  //END
+//Preping Vector
+platforms.reserve(10);
 	//Create Individual sprites for objects that will persist all game
 	 winSize = CCDirector::sharedDirector()->getWinSize();
 		
@@ -109,6 +111,18 @@ debugDraw->SetFlags(flags);
 }
 void Game::update(float dt) {
 
+	//clean out out of bounds platforms
+	int platCount = platforms.size();
+	if(platCount > 0){
+		GameObject* obj =  platforms.front();
+		b2Vec2  pos = obj->getBody()->GetPosition();
+		int endX = pos.x+5.0f;
+		if(endX < 0)
+		{
+			//obj->removeFromParentAndCleanup();
+			platforms.erase(platforms.begin());
+		}
+	}
 	_player->updateTrail(dt);
 
 	//It is recommended that a fixed time step is used with Box2D for stability
@@ -123,22 +137,29 @@ void Game::update(float dt) {
 	// generally best to keep the time step and iterations fixed.
 	world->Step(dt, velocityIterations, positionIterations);
  
- 
+	vector<GameObject*> objectsToClean(0);
 	//Iterate over the bodies in the physics world
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
 		if (b->GetUserData() != NULL) {
-						GameObject *myActor = (GameObject*)b->GetUserData();
-
-						if(myActor->isOffScreen()&&!myActor->canBeOffScreen()){
-							myActor->removeFromParentAndCleanup();
+			GameObject *myActor = (GameObject*)b->GetUserData();
+			if(myActor->isOffScreen()&&!myActor->canBeOffScreen()){
+				//if not player sprite dont add to clean arr
+				if(_player != myActor){
+					objectsToClean.push_back(myActor);	
+				}else{
+					//place in screen again
+				}
 			}
 			else {
 			//Synchronize the AtlasSprites position and rotation with the corresponding body
-			myActor->getSprite()->setPosition(CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO));
-			myActor->getSprite()->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
+				myActor->getSprite()->setPosition(CCPointMake( b->GetPosition().x * PTM_RATIO, b->GetPosition().y * PTM_RATIO));
+				myActor->getSprite()->setRotation(-1 * CC_RADIANS_TO_DEGREES(b->GetAngle()));
 			}
-			}	
-	}	
+		}	
+	}
+	for(int i =0;i<objectsToClean.size();i++){
+		objectsToClean.at(i)->removeFromParentAndCleanup();
+	}
 	if(move==false){
 		spawnrate+=dt;
 		if(spawnrate>=1){
@@ -155,10 +176,10 @@ void Game::update(float dt) {
 			this->addChild(test->getSprite());	
 			test->createBox2dObject(world);
 			test->getBody()->SetLinearVelocity(b2Vec2(-5.0f, 0.0f));
-		test->getBody()->SetType(b2_kinematicBody);
-
+		    test->getBody()->SetType(b2_kinematicBody);
 			//test->getSprite()->runAction(CCMoveBy::create( 4 ,ccp(-winSize.width*1.5, 0)));
 			spawnrate=0;
+			platforms.push_back(test);
 			CCDirector::sharedDirector()->getActionManager()->pauseTarget(_boss->getSprite());
 			move=false;
 			CCLog("%i", _batchNode->getChildrenCount());//err:gameobjects arent autoreleased(coz it doesnt work dunno wtf- cocos releases them too early maybe?) so makesure to release when done - check/confirm memusage with this print

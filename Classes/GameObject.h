@@ -13,7 +13,8 @@ public:
 
 	b2Body* getBody();
 	void createBox2dObject(b2World* world);
-
+	//used so i can easily identify a gameObject in the world
+	string id;
 	GameObject();
 	static GameObject* retainedObjectWithSpriteFrameName(const char *pszSpriteFrameName);
 	static GameObject* retainedObjectWithSpriteFrame(CCSpriteFrame *pSpriteFrame );

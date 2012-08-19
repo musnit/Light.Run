@@ -10,7 +10,6 @@ Light::Light()
 	Light* Light::retainedLight(){
 	Light* l = new Light();
 	l->setContentSize(CCSize(100,5));
-
 	return l;
 }
 

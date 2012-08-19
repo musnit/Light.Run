@@ -161,7 +161,7 @@ GameObject* GameObject::retainedObjectWithSprite(CCSprite *pSprite )
 }
  
 	void GameObject::removeFromParentAndCleanup(){
-  // this->body->GetWorld()->DestroyBody( this->body );
-	//	this->sprite->removeFromParentAndCleanup(true);
-	//CCNode::removeFromParentAndCleanup(true);
+	   this->body->GetWorld()->DestroyBody( this->body );
+	   this->sprite->removeFromParentAndCleanup(true);
+	  // CCNode::removeFromParentAndCleanup(true);
 }

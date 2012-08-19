@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "SimpleAudioEngine.h"
+#include <vector>
+#include "Light.h"
 
 #define PTM_RATIO 32
 
@@ -24,6 +26,7 @@ private:
 	void update(float dt);
 	CCSize winSize;
 	b2World* world;
+	std::vector<GameObject*> platforms;
 
 public:
 	virtual void draw();
