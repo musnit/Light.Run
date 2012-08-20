@@ -27,3 +27,11 @@ void Light::draw(){
 void Light::removeFromParentAndCleanup(){
 	CCSprite::removeFromParentAndCleanup(true);
 }
+
+bool Light::IsTouched(){
+	return _touched;
+}
+
+void Light::IsTouched(bool touched){
+	 _touched = touched;
+}

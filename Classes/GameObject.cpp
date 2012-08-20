@@ -9,7 +9,7 @@ GameObject::GameObject()
 		 this->colour =c;
 		 this->colourmode=0;
 
-    CCNode::CCNode();
+	CCNode::CCNode();
 }
 	bool GameObject::canBeOffScreen(){
 	return false;
@@ -25,45 +25,44 @@ GameObject::GameObject()
 GameObject* GameObject::retainedObjectWithSpriteFrameName(const char *pszSpriteFrameName )
 {
 	GameObject *obj = new GameObject();
-    if (obj->sprite=CCSprite::createWithSpriteFrameName(pszSpriteFrameName))
-    {
+	if (obj->sprite=CCSprite::createWithSpriteFrameName(pszSpriteFrameName))
+	{
 		obj->newtrail=0.05f;
 		_ccColor3B c =  {255,0,0};
 		 obj->colour =c;
-		 		 obj->colourmode=0;
+				 obj->colourmode=0;
 
 		 return obj;
-    }
-    CC_SAFE_DELETE(obj);
+	}
+	CC_SAFE_DELETE(obj);
 	return NULL;
 }
 
 GameObject* GameObject::retainedObjectWithSpriteFrame(CCSpriteFrame *pSpriteFrame )
 {
 	GameObject *obj = new GameObject();
-    if (obj->sprite=CCSprite::create(pSpriteFrame))
-    {
+	if (obj->sprite=CCSprite::create(pSpriteFrame))
+	{
 		obj->newtrail=0.05f;
 		_ccColor3B c =  {255,0,0};
 		 obj->colour =c;
-		 		 obj->colourmode=0;
-
+				 obj->colourmode=0;
 		 return obj;
-    }
-    CC_SAFE_DELETE(obj);
+	}
+	CC_SAFE_DELETE(obj);
 	return NULL;
 }
 
 GameObject* GameObject::retainedObjectWithSprite(CCSprite *pSprite )
 {
 	GameObject *obj = new GameObject();
-    obj->sprite=pSprite;
-    obj->newtrail=0.05f;
+	obj->sprite=pSprite;
+	obj->newtrail=0.05f;
 	_ccColor3B c =  {255,0,0};
 	 obj->colour =c;
 	 obj->colourmode=0;
 	 return obj;
-    
+	
 }
 
 	CCSprite* GameObject::getSprite(){
@@ -114,7 +113,7 @@ GameObject* GameObject::retainedObjectWithSprite(CCSprite *pSprite )
 	}
 
 	void GameObject::createBox2dObject(b2World* world) {
-    b2BodyDef playerBodyDef;
+	b2BodyDef playerBodyDef;
 	playerBodyDef.type = b2_dynamicBody;
 	playerBodyDef.position.Set(this->sprite->getPosition().x/PTM_RATIO, this->sprite->getPosition().y/PTM_RATIO);
 	playerBodyDef.userData = this;

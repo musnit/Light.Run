@@ -8,9 +8,14 @@
 #include "GameObject.h"
  
 class Player : public GameObject {
+private:
+	float _velocity;
+	float _acceleration;
 public:
-	Player();
+	Player(float acceleration);
 	void jump();
+	void Accelerate();
+	void SetVelocity(float velocity);
 };
   
 #endif

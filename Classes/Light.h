@@ -12,5 +12,9 @@ public:
 	static Light* retainedLight();
 	virtual void draw();
 	virtual void removeFromParentAndCleanup();
+	bool IsTouched();
+	void IsTouched(bool touched);
+protected:
+	bool _touched;
 };
 #endif
