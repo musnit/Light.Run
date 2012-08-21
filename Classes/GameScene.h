@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "SimpleAudioEngine.h"
 #include <vector>
+#include "Light.h"
 
 #define PTM_RATIO 32
 
