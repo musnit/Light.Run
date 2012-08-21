@@ -9,8 +9,10 @@
 #include "SimpleAudioEngine.h"
 #include <vector>
 #include "Light.h"
-
+#include "Statistics.h"
 #define PTM_RATIO 32
+
+
 
 using namespace cocos2d;
 
@@ -23,11 +25,15 @@ private:
 	Player* _player;
 	GameObject* _floor;
 	GameObject* _boss;
+	CCLabelTTF* _score;
+	CCLabelTTF* _label;
+	CCLabelTTF* _multiplier;
 	void update(float dt);
 	CCSize winSize;
 	b2World* world;
 	std::vector<GameObject*> platforms;
-
+	Statistics _stats;
+	void CleanWorld();
 public:
 	virtual void draw();
 	    LAYER_CREATE_FUNC(Game);

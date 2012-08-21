@@ -13,6 +13,21 @@
       <UniqueIdentifier>{d1993741-b9f2-4f57-ad44-8c9bcad2164f}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest</Extensions>
     </Filter>
+    <Filter Include="source\Scenes">
+      <UniqueIdentifier>{ba877792-7df1-4a4b-ae27-bbfb2b35be2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GameObjects">
+      <UniqueIdentifier>{b9e010d0-87a3-4cc2-b2ea-b169f29acbaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\GameObjects\Headers">
+      <UniqueIdentifier>{268d87db-f97f-4d75-aef7-4e63443dcb28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Scenes\Headers">
+      <UniqueIdentifier>{b08ffc6a-5ee0-4fa0-9f16-993f66aafa9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\DataObjects">
+      <UniqueIdentifier>{fad502c8-764c-4ffb-89d6-7063a434344a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Light Run.ico">
@@ -56,26 +71,35 @@
     <ClInclude Include="main.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Light.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\TrailedCCSprite.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameObject.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\GameScene.h">
       <Filter>source</Filter>
     </ClInclude>
     <ClInclude Include="b2debugDraw.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactListener.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="template.h">
+      <Filter>source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameObject.h">
+      <Filter>source\GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Light.h">
+      <Filter>source\GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>source\GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TrailedCCSprite.h">
+      <Filter>source\GameObjects\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>source\Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Statistics.h">
+      <Filter>source\DataObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,23 +109,29 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Light.cpp">
+    <ClCompile Include="b2debugDraw.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\TrailedCCSprite.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\GameObject.cpp">
+    <ClCompile Include="ContactListener.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameScene.cpp">
-      <Filter>source</Filter>
+      <Filter>source\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="b2debugDraw.cpp">
-      <Filter>source</Filter>
+    <ClCompile Include="..\Classes\GameObject.cpp">
+      <Filter>source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Light.cpp">
+      <Filter>source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TrailedCCSprite.cpp">
+      <Filter>source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Statistics.cpp">
+      <Filter>source\DataObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
