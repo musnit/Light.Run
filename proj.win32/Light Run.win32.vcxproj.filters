@@ -100,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="Statistics.h">
       <Filter>source\DataObjects</Filter>
+<<<<<<< HEAD
+=======
+    </ClInclude>
+    <ClInclude Include="ScoreLayer.h">
+      <Filter>source\Scenes\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BackgroundLayer.h">
+      <Filter>source\Scenes\Headers</Filter>
+>>>>>>> intial Layers Setup
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +141,15 @@
     </ClCompile>
     <ClCompile Include="Statistics.cpp">
       <Filter>source\DataObjects</Filter>
+<<<<<<< HEAD
+=======
+    </ClCompile>
+    <ClCompile Include="ScoreLayer.cpp">
+      <Filter>source\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundLayer.cpp">
+      <Filter>source\Scenes</Filter>
+>>>>>>> intial Layers Setup
     </ClCompile>
   </ItemGroup>
 </Project>

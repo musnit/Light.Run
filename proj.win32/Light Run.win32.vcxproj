@@ -145,9 +145,17 @@
     <ClInclude Include="..\Classes\Player.h" />
     <ClInclude Include="..\Classes\TrailedCCSprite.h" />
     <ClInclude Include="b2debugDraw.h" />
+<<<<<<< HEAD
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
+=======
+    <ClInclude Include="BackgroundLayer.h" />
+    <ClInclude Include="ContactListener.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ScoreLayer.h" />
+>>>>>>> intial Layers Setup
     <ClInclude Include="Statistics.h" />
     <ClInclude Include="template.h" />
   </ItemGroup>
@@ -159,8 +167,15 @@
     <ClCompile Include="..\Classes\Player.cpp" />
     <ClCompile Include="..\Classes\TrailedCCSprite.cpp" />
     <ClCompile Include="b2debugDraw.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="main.cpp" />
+=======
+    <ClCompile Include="BackgroundLayer.cpp" />
+    <ClCompile Include="ContactListener.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ScoreLayer.cpp" />
+>>>>>>> intial Layers Setup
     <ClCompile Include="Statistics.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

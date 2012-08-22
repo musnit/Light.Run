@@ -72,7 +72,6 @@ platforms.reserve(10);
 //prep stats
 _stats =  Statistics();
 	 winSize = CCDirector::sharedDirector()->getWinSize();
-<<<<<<< HEAD
 //THIS IS THE LABEL SPAMMAGE BEGIN DONT FRET ILL CLEAN IT UP
 _multiplier = CCLabelTTF::labelWithString("_multiplier", CCSizeMake(300, 50), CCTextAlignment::kCCTextAlignmentLeft, "Arial", 9);
 _score = CCLabelTTF::labelWithString("_score", CCSizeMake(300, 50), CCTextAlignment::kCCTextAlignmentLeft, "Arial", 9);
@@ -94,8 +93,6 @@ _multiplier->setVisible(true);
 _multiplier->setColor(ccc3(234,0,12));
 this->addChild(_multiplier);
 ///LABEL SPAMMAGE IS NOW COMPLETE
-=======
->>>>>>> intial Layers Setup
 	_player = (Player*) GameObject::retainedObjectWithSpriteFrameName("stander.png");
 	_player->getSprite()->setPosition(ccp(winSize.width * 0.1, winSize.height * 0.5));
 	_batchNode->addChild(_player->getSprite(), 1);
